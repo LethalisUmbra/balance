@@ -1,13 +1,7 @@
 import Layout from "@/components/layout";
-import { signIn, useSession } from "next-auth/react";
 
 export default function Home() {
-  const { data: session } = useSession();
 
-  if (!session) {
-    signIn();
-    return;
-  }
   return (
     <Layout>
       <div className='m-auto max-w-2xl my-10'>

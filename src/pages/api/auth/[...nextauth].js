@@ -1,6 +1,7 @@
 import NextAuth from "next-auth"
 import PostgresAdapter from "@auth/pg-adapter"
 import { Pool } from "pg"
+import CredentialsProvider from 'next-auth/providers/credentials'
 
 const pool = new Pool({
   host: process.env.DATABASE_HOST,
@@ -14,12 +15,22 @@ const pool = new Pool({
 
 export default NextAuth({
   adapter: PostgresAdapter(pool),
-  providers: [],
-  pages: {
-    signIn: '/auth/signin',
-    signOut: '/auth/signout',
-    error: '/auth/error', // Error code passed in query string as ?error=
-    verifyRequest: '/auth/verify-request', // (used for check email message)
-    newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
-  }
+  providers: [
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        username: { label: "Username", type: "text" },
+        password: {  label: "Password", type: "password" }
+      },
+      async authorize(credentials) {
+        // Aquí puedes validar las credenciales manualmente
+        const user = { id: 1, name: "User", email: "user@example.com" }
+        if (user) {
+          return user
+        } else {
+          return null
+        }
+      }
+    })
+  ],
 })
