@@ -1,9 +1,16 @@
 import Layout from "@/components/layout";
+import { signIn, useSession } from "next-auth/react";
 
 export default function Home() {
+  const { data: session } = useSession();
+
+  if (!session) {
+    signIn();
+    return;
+  }
   return (
     <Layout>
-      <div className='m-auto max-w-xl text-xl'>
+      <div className='m-auto max-w-2xl my-10'>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi a
         imperdiet risus, non pretium lectus. Cras eu finibus augue, eget
         condimentum neque. Aliquam et pellentesque sapien, at elementum mi.
@@ -29,22 +36,6 @@ export default function Home() {
         leo eleifend volutpat non lacinia dui. Proin porttitor eu nunc id
         aliquam. Nam eu faucibus arcu, blandit tincidunt odio. Sed quis leo non
         enim dapibus rhoncus. Duis ornare eros vitae arcu scelerisque pulvinar.
-        Sed mattis pulvinar erat, vitae accumsan elit pretium ac. Sed fringilla
-        nisi velit, at ornare justo venenatis eu. Nulla facilisi. Nunc et cursus
-        lorem. Ut euismod nisl sed pellentesque auctor. Donec nec nulla
-        lobortis, iaculis neque id, faucibus nibh. Aliquam pharetra turpis
-        sollicitudin, vulputate lectus sed, pretium augue. Quisque a magna
-        interdum, imperdiet neque vitae, egestas lectus. Sed ut tempus massa, eu
-        tempus leo. Donec euismod, mi finibus gravida malesuada, velit magna
-        lobortis mauris, ac faucibus est justo ac nisl. Praesent dictum leo non
-        ipsum malesuada, vitae mollis erat consequat. Fusce sit amet nisl id ex
-        sagittis interdum a ut quam. Duis hendrerit libero sit amet neque
-        imperdiet, vitae convallis purus consectetur. Vivamus felis nibh,
-        eleifend in arcu id, laoreet convallis nibh. Nullam finibus nisi quis
-        suscipit consectetur. Nullam vulputate ligula eros, ac aliquam eros
-        tristique eu. Pellentesque molestie aliquet lorem, et consectetur justo
-        feugiat eleifend. Mauris nec velit enim. Vestibulum pharetra molestie
-        auctor. Phasellus ac fringilla nulla.
       </div>
     </Layout>
   );
